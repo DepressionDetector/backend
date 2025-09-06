@@ -15,7 +15,7 @@ const phq9Questions = require("./src/routes/phq9.route");
 
 app.use(
   cors({
-    origin: "http://localhost:3006",
+    origin: "http://localhost:3000",
     methods: "GET,POST,PUT,DELETE,PATCH", 
     credentials: true, 
   })
