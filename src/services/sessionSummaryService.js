@@ -4,8 +4,8 @@ const SessionSummary = require("../models/sessionSummaryModel");
 const { decrypt, encrypt } = require("../utils/chatEncryption");
 const axios = require("axios");
 
-async function generateAndSaveSessionSummary(userID, sessionID) {
-    const chats = await Chat.find({ userID, sessionID }).sort({ timestamp: 1 });
+async function generateAndSaveSessionSummary(sessionID) {
+    const chats = await Chat.find({ sessionID }).sort({ timestamp: 1 });
 
     const fullChat = chats.map(chat => {
         const decryptedMessage = decrypt(chat.message);
@@ -21,7 +21,6 @@ async function generateAndSaveSessionSummary(userID, sessionID) {
     const encryptedSummary = encrypt(summaryText);
 
     const sessionSummary = new SessionSummary({
-        userID,
         sessionID,
         summary: encryptedSummary,
     });
@@ -30,8 +29,8 @@ async function generateAndSaveSessionSummary(userID, sessionID) {
     return summaryText;
 }
 
-async function getSessionSummariesByUserID(userID) {
-    const summaries = await SessionSummary.find({ userID });
+async function getSessionSummariesByUserID() {
+    const summaries = await SessionSummary.find();
     return summaries.map(summary => decrypt(summary.summary));
 }
 

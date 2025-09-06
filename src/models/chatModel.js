@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 
 const chatSchema = new mongoose.Schema({
-    userID: { type: Number, required: true },
     sessionID: { type: Number, required: true },
     sender: {
         type: String,

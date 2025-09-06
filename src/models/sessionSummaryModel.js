@@ -2,10 +2,6 @@
 const mongoose = require("mongoose");
 
 const sessionSummarySchema = new mongoose.Schema({
-    userID: {
-        type: Number,
-        required: true,
-    },
     sessionID: {
         type: Number,
         required: true,
