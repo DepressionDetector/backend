@@ -1,12 +1,12 @@
 const Chat = require("../models/chatModel");
 const { encrypt, decrypt } = require("../utils/chatEncryption");
 
-async function saveMessage({ userID, sessionID, sender, message }) {
+async function saveMessage({ sessionID, sender, message }) {
     try {
 
         const encrypted = encrypt(message);
 
-        const chat = new Chat({ userID, sessionID, sender, message: encrypted });
+        const chat = new Chat({ sessionID, sender, message: encrypted });
         await chat.save();
 
     } catch (err) {
@@ -15,8 +15,8 @@ async function saveMessage({ userID, sessionID, sender, message }) {
     }
 }
 
-async function getSessionMessages(userID, sessionID, limit = 10) {
-    const chats = await Chat.find({ userID, sessionID }).sort({ timestamp: -1 }).limit(limit);
+async function getSessionMessages(sessionID, limit = 10) {
+    const chats = await Chat.find({ sessionID }).sort({ timestamp: -1 }).limit(limit);
     return chats.reverse().map((chat) => ({
         sender: chat.sender,
         message: decrypt(chat.message),

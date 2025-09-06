@@ -10,15 +10,15 @@ function getScoreFromAnswer(answer) {
     return -1; // unknown
 }
 
-async function savePHQ9Answer({ userID, sessionID, questionID, question, answer }) {
+async function savePHQ9Answer({ sessionID, questionID, question, answer }) {
     const score = getScoreFromAnswer(answer);
-    const entry = new PHQ9Response({ userID, sessionID, questionID, question, answer, score });
+    const entry = new PHQ9Response({ sessionID, questionID, question, answer, score });
     await entry.save();
     return entry;
 }
 
-async function getAskedPHQ9IDs(userID, sessionID) {
-    const entries = await PHQ9Response.find({ userID, sessionID });
+async function getAskedPHQ9IDs(sessionID) {
+    const entries = await PHQ9Response.find({ sessionID });
     return entries.map(e => e.questionID);
 }
 
