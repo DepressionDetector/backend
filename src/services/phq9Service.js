@@ -26,4 +26,8 @@ function getNextPHQ9Question(askedIDs) {
     return questions.find(q => !askedIDs.includes(q.id)) || null;
 }
 
-module.exports = { getScoreFromAnswer, savePHQ9Answer, getAskedPHQ9IDs, getNextPHQ9Question };
+async function getAllPHQ9Answers() {
+    return await PHQ9Response.find({});
+}
+
+module.exports = { getScoreFromAnswer, savePHQ9Answer, getAskedPHQ9IDs, getNextPHQ9Question, getAllPHQ9Answers };
